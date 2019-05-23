@@ -1,7 +1,9 @@
 package cr.ac.icitcr.jcanales.flappy;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,8 +11,13 @@ import com.badlogic.gdx.graphics.Color;
 
 import java.util.Random;
 
+import cr.ac.icitcr.jcanales.flappy.states.GameStateManager;
+import cr.ac.icitcr.jcanales.flappy.states.MenuState;
+import sun.net.www.HeaderParser;
+
 
 public class FlappyBird extends ApplicationAdapter {
+	/*
 	BitmapFont font;
 	SpriteBatch batch;
 	Texture img, bird, bird1, topTube, bottomTube;
@@ -23,6 +30,7 @@ public class FlappyBird extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+
 		flappy = true;
 		batch = new SpriteBatch();
 		gravity = -0.7f;
@@ -56,12 +64,9 @@ public class FlappyBird extends ApplicationAdapter {
 
 	}
 
+
 	@Override
 	public void render () {
-		/*
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		*/
 		batch.begin();
 		batch.draw(img, 0, 0, witdh, height);
 
@@ -108,4 +113,34 @@ public class FlappyBird extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 	}
+	*/
+
+	public static int WIDTH = 1080;
+	public static int HEIGHT = 1794;
+	public static final float SCALE = 0.5f;
+	public static final String TITLE = "FlappyBird";
+
+	private SpriteBatch spriteBatch;
+	private GameStateManager gameStateManager;
+
+	@Override
+	public void create () {
+		spriteBatch = new SpriteBatch();
+		gameStateManager = new GameStateManager();
+		gameStateManager.push(new MenuState(gameStateManager));
+		WIDTH = Gdx.graphics.getWidth();
+		HEIGHT = Gdx.graphics.getHeight();
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		Gdx.app.debug("W and H", String.format("width: %d\nHeight:%d",WIDTH,HEIGHT));
+		Gdx.gl.glClearColor(1, 0, 0, 1);
+	}
+
+	@Override
+	public void render () {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		gameStateManager.update(Gdx.graphics.getDeltaTime());
+		gameStateManager.render(spriteBatch);
+	}
+
+
 }

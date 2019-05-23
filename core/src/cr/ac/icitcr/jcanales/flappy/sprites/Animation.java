@@ -3,7 +3,7 @@ package cr.ac.icitcr.jcanales.flappy.sprites;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-public class Animation {
+public class Animation implements IAnimation {
     Array<TextureRegion> frames;
     float maxFrameTime;
     float currentFrameTime;
